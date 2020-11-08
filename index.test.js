@@ -35,4 +35,15 @@ describe("Mars-Rover class", () => {
         marsRover.execute("B");
         expect(marsRover.getCoordinates()).toEqual({ x: 0, y: 1, direction: DIRECTION.SOUTH });
     });
+
+    test("Execute command, move east forward and backward", () => {
+        expect(marsRover).toBeDefined();
+        initialCoordinates.setDirection(DIRECTION.EAST)
+        marsRover.execute("F");
+        expect(marsRover.getCoordinates()).toEqual({ x: 1, y: 0, direction: DIRECTION.EAST });
+        marsRover.execute("B");
+        expect(marsRover.getCoordinates()).toEqual({ x: 0, y: 0, direction: DIRECTION.EAST });
+        marsRover.execute("B");
+        expect(marsRover.getCoordinates()).toEqual({ x: -1, y: 0, direction: DIRECTION.EAST });
+    });
 });
