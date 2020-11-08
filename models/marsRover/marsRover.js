@@ -1,4 +1,4 @@
-const { DIRECTION } = require("./coordinates");
+const { DIRECTION } = require("../coordinates");
 
 class MarsRover {
     constructor(coordinates) {

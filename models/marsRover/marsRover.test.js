@@ -1,5 +1,5 @@
-const { Coordinates, DIRECTION } = require("./models/coordinates");
-const { MarsRover } = require("./models/marsRover");
+const { Coordinates, DIRECTION } = require("../coordinates");
+const { MarsRover } = require("./marsRover");
 
 describe("Mars-Rover class", () => {
     let marsRover;
@@ -80,5 +80,11 @@ describe("Mars-Rover class", () => {
         expect(marsRover.getCoordinates()).toEqual({ x: 0, y: 0, direction: DIRECTION.EAST });
         marsRover.execute("L");
         expect(marsRover.getCoordinates()).toEqual({ x: 0, y: 0, direction: DIRECTION.NORTH });
+    });
+
+    test("Execute command, with none valid char", () => {
+        expect(marsRover).toBeDefined();
+        marsRover.execute("LFFSSBRFFFXXB");
+        expect(marsRover.getCoordinates()).toEqual({ x: -1, y: 1, direction: DIRECTION.NORTH });
     });
 });
