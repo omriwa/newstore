@@ -11,6 +11,15 @@ class Coordinates {
         this.y = y;
         this.direction = direction;
     }
+
+    setCoordinates(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    setDirection(direction) {
+        this.direction = direction;
+    }
 }
 
 module.exports = {
