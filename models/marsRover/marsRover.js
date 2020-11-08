@@ -78,6 +78,9 @@ class MarsRover {
                     this.coordinates.setDirection(DIRECTION.NORTH);
                 }
                 break;
+
+            default:
+                break;
         }
     }
 }

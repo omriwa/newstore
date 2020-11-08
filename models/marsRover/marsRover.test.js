@@ -85,6 +85,6 @@ describe("Mars-Rover class", () => {
     test("Execute command, with none valid char", () => {
         expect(marsRover).toBeDefined();
         marsRover.execute("LFFSSBRFFFXXB");
-        expect(marsRover.getCoordinates()).toEqual({ x: -1, y: 1, direction: DIRECTION.NORTH });
+        expect(marsRover.getCoordinates()).toEqual({ x: -1, y: 2, direction: DIRECTION.NORTH });
     });
 });
