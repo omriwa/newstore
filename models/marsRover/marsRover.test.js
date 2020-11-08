@@ -93,7 +93,7 @@ describe("Mars-Rover class", () => {
         const obsticales = [[0, 1]];
         initialCoordinates.setObsticales(obsticales);
         marsRover.execute("F");
-        expect(marsRover.getCoordinates()).toEqual({ x: 0, y: 1, direction: DIRECTION.NORTH,obsticales });
+        expect(marsRover.getCoordinates()).toEqual({ x: 0, y: 0, direction: DIRECTION.NORTH, obsticales });
         expect(marsRover.getState()).toEqual(MARS_ROVER_STATE.STOP);
-    })
+    });
 });

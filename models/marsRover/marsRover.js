@@ -20,45 +20,44 @@ class MarsRover {
 
     execute(command) {
         for (let i = 0; i < command.length; i++) {
-            this.moveMarsRover(command.charAt(i));
-            this.updateRoverState();
+            const singleCommand = command.charAt(i);
+            this.setDirection(singleCommand);
+            const newCoordinates = this.moveMarsRover(singleCommand);
+            if (newCoordinates) {
+                this.setRoverState(newCoordinates);
+                this.setNewXYCoordinates(newCoordinates);   
+            }
         }
     }
 
-    moveMarsRover(commandChar) {
-        const { direction, x, y } = this.coordinates;
+    isNewCoordinatesObsticale(newCoordinates) {
+        const obsticales = this.coordinates.getObsticales();
+        const { x, y } = newCoordinates;
+
+        for (let i = 0; i < obsticales.length; i++){
+            if (x === obsticales[i][0] && y === obsticales[i][1]) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    setRoverState(newCoordinates) {
+        this.state = this.isNewCoordinatesObsticale(newCoordinates) ? MARS_ROVER_STATE.STOP : MARS_ROVER_STATE.NORMAL;
+    }
+
+    setNewXYCoordinates(newCoordinates) {
+        if (this.state === MARS_ROVER_STATE.NORMAL) {
+            const { x, y } = newCoordinates;
+            this.coordinates.setCoordinates(x, y);
+        }
+    }
+
+    setDirection(commandChar) {
+        const { direction } = this.coordinates;
 
         switch (commandChar) {
-            case "F":
-                if (direction === DIRECTION.NORTH) {
-                    this.coordinates.setCoordinates(x, y + 1);
-                }
-                else if (direction === DIRECTION.SOUTH) {
-                    this.coordinates.setCoordinates(x, y - 1);
-                }
-                else if (direction === DIRECTION.EAST) {
-                    this.coordinates.setCoordinates(x + 1, y);
-                }
-                else {
-                    this.coordinates.setCoordinates(x - 1, y);
-                }
-                break;
-
-            case "B":
-                if (direction === DIRECTION.NORTH) {
-                    this.coordinates.setCoordinates(x, y - 1);
-                }
-                else if (direction === DIRECTION.SOUTH) {
-                    this.coordinates.setCoordinates(x, y + 1);
-                }
-                else if (direction === DIRECTION.EAST) {
-                    this.coordinates.setCoordinates(x - 1, y);
-                }
-                else {
-                    this.coordinates.setCoordinates(x + 1, y);
-                }
-                break;
-
             case "R":
                 if (direction === DIRECTION.NORTH) {
                     this.coordinates.setDirection(DIRECTION.EAST);
@@ -94,17 +93,57 @@ class MarsRover {
         }
     }
 
-    updateRoverState() {
-        const obsticales = this.coordinates.getObsticales();
-        const { x, y } = this.coordinates;
+    moveMarsRover(commandChar) {
+        const { direction, x, y } = this.coordinates;
 
-        for (let i = 0; i < obsticales.length; i++){
+        switch (commandChar) {
+            case "F":
+                if (direction === DIRECTION.NORTH) {
+                    return { x, y: y + 1 };
+                }
+                else if (direction === DIRECTION.SOUTH) {
+                    return { x, y: y - 1 };
+                }
+                else if (direction === DIRECTION.EAST) {
+                    return { x: x + 1, y };
+                }
+                else {
+                    return { x: x - 1, y };
+                }
+
+            case "B":
+                if (direction === DIRECTION.NORTH) {
+                    return { x, y: y - 1 };
+                }
+                else if (direction === DIRECTION.SOUTH) {
+                    return { x, y: y + 1 };
+                }
+                else if (direction === DIRECTION.EAST) {
+                    return { x: x - 1, y };
+                }
+                else {
+                    return { x: x + 1, y };
+                }
+
+            default:
+                return;
+        }
+    }
+
+    checkIfRoverCanMove(nextCoordinates, callback) {
+        const obsticales = this.coordinates.getObsticales();
+        const { x, y } = nextCoordinates;
+
+        for (let i = 0; i < obsticales.length; i++) {
             if (x === obsticales[i][0] && y === obsticales[i][1]) {
                 this.state = MARS_ROVER_STATE.STOP;
 
                 return;
             }
         }
+
+        this.state = MARS_ROVER_STATE.NORMAL;
+        callback();
     }
 }
 
