@@ -48,7 +48,7 @@ class MarsRover {
                     this.coordinates.setCoordinates(x + 1, y);
                 }
                 break;
-            
+
             case "R":
                 if (direction === DIRECTION.NORTH) {
                     this.coordinates.setDirection(DIRECTION.EAST);
@@ -58,6 +58,21 @@ class MarsRover {
                 }
                 else if (direction === DIRECTION.SOUTH) {
                     this.coordinates.setDirection(DIRECTION.WEST);
+                }
+                else {
+                    this.coordinates.setDirection(DIRECTION.NORTH);
+                }
+                break;
+
+            case "L":
+                if (direction === DIRECTION.NORTH) {
+                    this.coordinates.setDirection(DIRECTION.WEST);
+                }
+                else if (direction === DIRECTION.WEST) {
+                    this.coordinates.setDirection(DIRECTION.SOUTH);
+                }
+                else if (direction === DIRECTION.SOUTH) {
+                    this.coordinates.setDirection(DIRECTION.EAST);
                 }
                 else {
                     this.coordinates.setDirection(DIRECTION.NORTH);
