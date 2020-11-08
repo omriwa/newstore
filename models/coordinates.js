@@ -5,11 +5,16 @@ const DIRECTION = {
     WEST: "WEST"
 }
 
+
 class Coordinates {
-    constructor(x, y, direction) {
+    constructor(x, y, direction,obsticales) {
         this.x = x;
         this.y = y;
         this.direction = direction;
+
+        if (obsticales) {
+            this.obsticales = obsticales;
+        }
     }
 
     setCoordinates(x, y) {
@@ -19,6 +24,14 @@ class Coordinates {
 
     setDirection(direction) {
         this.direction = direction;
+    }
+
+    setObsticales(obsticales) {
+        this.obsticales = obsticales;
+    }
+
+    getObsticales() {
+        return this.obsticales ? this.obsticales : [];
     }
 }
 

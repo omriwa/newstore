@@ -1,8 +1,17 @@
 const { DIRECTION } = require("../coordinates");
+const MARS_ROVER_STATE = {
+    STOP: "STOP",
+    NORMAL: "NORMAL"
+}
 
 class MarsRover {
     constructor(coordinates) {
         this.coordinates = coordinates;
+        this.state = MARS_ROVER_STATE.NORMAL;
+    }
+
+    getState() {
+        return this.state;
     }
 
     getCoordinates() {
@@ -12,6 +21,7 @@ class MarsRover {
     execute(command) {
         for (let i = 0; i < command.length; i++) {
             this.moveMarsRover(command.charAt(i));
+            this.updateRoverState();
         }
     }
 
@@ -83,8 +93,22 @@ class MarsRover {
                 break;
         }
     }
+
+    updateRoverState() {
+        const obsticales = this.coordinates.getObsticales();
+        const { x, y } = this.coordinates;
+
+        for (let i = 0; i < obsticales.length; i++){
+            if (x === obsticales[i][0] && y === obsticales[i][1]) {
+                this.state = MARS_ROVER_STATE.STOP;
+
+                return;
+            }
+        }
+    }
 }
 
 module.exports = {
-    MarsRover
+    MarsRover,
+    MARS_ROVER_STATE
 }

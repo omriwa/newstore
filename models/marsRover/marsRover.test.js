@@ -1,5 +1,5 @@
 const { Coordinates, DIRECTION } = require("../coordinates");
-const { MarsRover } = require("./marsRover");
+const { MarsRover,MARS_ROVER_STATE } = require("./marsRover");
 
 describe("Mars-Rover class", () => {
     let marsRover;
@@ -90,8 +90,10 @@ describe("Mars-Rover class", () => {
 
     test("Execute command, with a obsticales given", () => {
         expect(marsRover).toBeDefined();
-        initialCoordinates.setObsticales([[0, 1]]);
+        const obsticales = [[0, 1]];
+        initialCoordinates.setObsticales(obsticales);
         marsRover.execute("F");
-        expect(marsRover.getCoordinates()).toEqual({x: 0,y: 1, direction: DIRECTION.NORTH, state: "STOP"})
+        expect(marsRover.getCoordinates()).toEqual({ x: 0, y: 1, direction: DIRECTION.NORTH,obsticales });
+        expect(marsRover.getState()).toEqual(MARS_ROVER_STATE.STOP);
     })
 });
