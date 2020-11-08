@@ -61,12 +61,12 @@ describe("Mars-Rover class", () => {
     test("Execute command, clockwise change direction", () => {
         expect(marsRover).toBeDefined();
         marsRover.execute("R");
-        expect(marsRover.getCoordinates()).toEqual({ x: 0, y: 0, direction: DIRECTION.NORTH });
-        marsRover.execute("R");
         expect(marsRover.getCoordinates()).toEqual({ x: 0, y: 0, direction: DIRECTION.EAST });
         marsRover.execute("R");
         expect(marsRover.getCoordinates()).toEqual({ x: 0, y: 0, direction: DIRECTION.SOUTH });
         marsRover.execute("R");
         expect(marsRover.getCoordinates()).toEqual({ x: 0, y: 0, direction: DIRECTION.WEST });
+        marsRover.execute("R");
+        expect(marsRover.getCoordinates()).toEqual({ x: 0, y: 0, direction: DIRECTION.NORTH });
     });
 });
