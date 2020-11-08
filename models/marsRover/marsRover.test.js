@@ -87,4 +87,11 @@ describe("Mars-Rover class", () => {
         marsRover.execute("LFFSSBRFFFXXB");
         expect(marsRover.getCoordinates()).toEqual({ x: -1, y: 2, direction: DIRECTION.NORTH });
     });
+
+    test("Execute command, with a obsticales given", () => {
+        expect(marsRover).toBeDefined();
+        initialCoordinates.setObsticales([[0, 1]]);
+        marsRover.execute("F");
+        expect(marsRover.getCoordinates()).toEqual({x: 0,y: 1, direction: DIRECTION.NORTH, state: "STOP"})
+    })
 });
