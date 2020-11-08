@@ -23,11 +23,17 @@ class MarsRover {
                 if (direction === DIRECTION.NORTH) {
                     this.coordinates.setCoordinates(x, y + 1);
                 }
+                else if (direction === DIRECTION.SOUTH) {
+                    this.coordinates.setCoordinates(x, y - 1);
+                }
                 break;
 
             case "B":
                 if (direction === DIRECTION.NORTH) {
                     this.coordinates.setCoordinates(x, y - 1);
+                }
+                else if (direction === DIRECTION.SOUTH) {
+                    this.coordinates.setCoordinates(x, y + 1);
                 }
                 break;
         }

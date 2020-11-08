@@ -3,13 +3,14 @@ const { MarsRover } = require("./models/marsRover");
 
 describe("Mars-Rover class", () => {
     let marsRover;
-    let initialCoordinates = new Coordinates(0, 0, DIRECTION.NORTH)
+    let initialCoordinates;
 
     beforeEach(() => {
+        initialCoordinates = new Coordinates(0, 0, DIRECTION.NORTH);
         marsRover = new MarsRover(initialCoordinates);
     })
 
-    test("Get Coordinates", () => {   
+    test("Get Coordinates", () => {
         expect(marsRover).toBeDefined();
         expect(marsRover.getCoordinates()).toEqual(initialCoordinates)
     });
@@ -26,6 +27,7 @@ describe("Mars-Rover class", () => {
 
     test("Execute command, move south forward and backward", () => {
         expect(marsRover).toBeDefined();
+        initialCoordinates.setDirection(DIRECTION.SOUTH)
         marsRover.execute("F");
         expect(marsRover.getCoordinates()).toEqual({ x: 0, y: -1, direction: DIRECTION.SOUTH });
         marsRover.execute("B");
