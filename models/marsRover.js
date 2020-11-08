@@ -29,6 +29,9 @@ class MarsRover {
                 else if (direction === DIRECTION.EAST) {
                     this.coordinates.setCoordinates(x + 1, y);
                 }
+                else {
+                    this.coordinates.setCoordinates(x - 1, y);
+                }
                 break;
 
             case "B":
@@ -40,6 +43,9 @@ class MarsRover {
                 }
                 else if (direction === DIRECTION.EAST) {
                     this.coordinates.setCoordinates(x - 1, y);
+                }
+                else {
+                    this.coordinates.setCoordinates(x + 1, y);
                 }
                 break;
         }
