@@ -1,6 +1,6 @@
 const { DIRECTION } = require("../coordinates");
 const MARS_ROVER_STATE = {
-    STOP: "STOP",
+    STOP: "STOPPED",
     NORMAL: "NORMAL"
 }
 
