@@ -22,10 +22,10 @@ class MarsRover {
         for (let i = 0; i < command.length; i++) {
             const singleCommand = command.charAt(i);
             this.setDirection(singleCommand);
-            const newCoordinates = this.moveMarsRover(singleCommand,this.coordinates);
+            const newCoordinates = this.moveMarsRover(singleCommand, this.coordinates);
             if (newCoordinates) {
                 this.setRoverState(newCoordinates);
-                this.setNewXYCoordinates(newCoordinates);   
+                this.setNewXYCoordinates(newCoordinates);
             }
         }
     }
@@ -34,7 +34,7 @@ class MarsRover {
         const obsticales = this.coordinates.getObsticales();
         const { x, y } = newCoordinates;
 
-        for (let i = 0; i < obsticales.length; i++){
+        for (let i = 0; i < obsticales.length; i++) {
             if (x === obsticales[i][0] && y === obsticales[i][1]) {
                 return true;
             }
@@ -93,7 +93,7 @@ class MarsRover {
         }
     }
 
-    moveMarsRover(commandChar,coordinates) {
+    moveMarsRover(commandChar, coordinates) {
         const { direction, x, y } = coordinates;
 
         switch (commandChar) {
@@ -143,7 +143,7 @@ class MarsRover {
         return true;
     }
 
-    getCommandToOvercomeObsticale(source,destination,direction,command) {
+    getCommandToOvercomeObsticale(source, destination, direction, command) {
         const { x: xSource, y: ySource } = source;
         const { x: xDestination, y: yDestination } = destination;
 
@@ -152,15 +152,14 @@ class MarsRover {
         }
         else {
             let newDirection = this.getDirection(source, destination, direction);
-            newDirection = newDirection !== newDirection ? newDirection : direction;
             const newSource = this.moveMarsRover('F', { ...source, direction });
-            command += newDirection + 'F';
-            
+            command += this.decryptDirectionToCommand(direction,newDirection) + 'F';
+
             return this.getCommandToOvercomeObsticale(newSource, destination, newDirection, command);
         }
     }
 
-    getDirection(source, destination,direction) {
+    getDirection(source, destination, direction) {
         const { x: xSource, y: ySource } = source;
         const { x: xDestination, y: yDestination } = destination;
 
@@ -175,6 +174,36 @@ class MarsRover {
         }
         else if (ySource > yDestination && direction !== DIRECTION.SOUTH) {
             return DIRECTION.SOUTH;
+        }
+        else {
+            return direction;
+        }
+    }
+
+    decryptDirectionToCommand(prevDirection, nextDirection) {
+        if (
+            prevDirection === DIRECTION.NORTH && nextDirection === DIRECTION.SOUTH || prevDirection === DIRECTION.SOUTH && nextDirection === DIRECTION.NORTH
+            ||
+            prevDirection === DIRECTION.WEST && nextDirection === DIRECTION.EAST || prevDirection === DIRECTION.EAST && nextDirection === DIRECTION.WEST
+        ) {
+            return "LL";
+        }
+        else if (
+            prevDirection === DIRECTION.EAST && nextDirection === DIRECTION.NORTH || prevDirection === DIRECTION.WEST && nextDirection === DIRECTION.SOUTH
+            ||
+            prevDirection === DIRECTION.NORTH && nextDirection === DIRECTION.WEST || prevDirection === DIRECTION.SOUTH && nextDirection === DIRECTION.EAST
+        ) {
+            return "L";
+        }
+        else if (
+            prevDirection === DIRECTION.WEST && nextDirection === DIRECTION.NORTH || prevDirection === DIRECTION.EAST && nextDirection === DIRECTION.SOUTH
+            ||
+            prevDirection === DIRECTION.NORTH && nextDirection === DIRECTION.EAST || prevDirection === DIRECTION.SOUTH && nextDirection === DIRECTION.WEST
+        ) {
+            return "R";
+        }
+        else {
+            return "";
         }
     }
 }
