@@ -22,7 +22,7 @@ class MarsRover {
         for (let i = 0; i < command.length; i++) {
             const singleCommand = command.charAt(i);
             this.setDirection(singleCommand);
-            const newCoordinates = this.moveMarsRover(singleCommand);
+            const newCoordinates = this.moveMarsRover(singleCommand,this.coordinates);
             if (newCoordinates) {
                 this.setRoverState(newCoordinates);
                 this.setNewXYCoordinates(newCoordinates);   
@@ -93,8 +93,8 @@ class MarsRover {
         }
     }
 
-    moveMarsRover(commandChar) {
-        const { direction, x, y } = this.coordinates;
+    moveMarsRover(commandChar,coordinates) {
+        const { direction, x, y } = coordinates;
 
         switch (commandChar) {
             case "F":
@@ -130,20 +130,52 @@ class MarsRover {
         }
     }
 
-    checkIfRoverCanMove(nextCoordinates, callback) {
+    checkIfRoverCanMove(nextCoordinates) {
         const obsticales = this.coordinates.getObsticales();
         const { x, y } = nextCoordinates;
 
         for (let i = 0; i < obsticales.length; i++) {
             if (x === obsticales[i][0] && y === obsticales[i][1]) {
-                this.state = MARS_ROVER_STATE.STOP;
-
-                return;
+                return false;
             }
         }
 
-        this.state = MARS_ROVER_STATE.NORMAL;
-        callback();
+        return true;
+    }
+
+    getCommandToOvercomeObsticale(source,destination,direction,command) {
+        const { x: xSource, y: ySource } = source;
+        const { x: xDestination, y: yDestination } = destination;
+
+        if (xSource === xDestination && ySource === yDestination) {
+            return command;
+        }
+        else {
+            let newDirection = this.getDirection(source, destination, direction);
+            newDirection = newDirection !== newDirection ? newDirection : direction;
+            const newSource = this.moveMarsRover('F', { ...source, direction });
+            command += newDirection + 'F';
+            
+            return this.getCommandToOvercomeObsticale(newSource, destination, newDirection, command);
+        }
+    }
+
+    getDirection(source, destination,direction) {
+        const { x: xSource, y: ySource } = source;
+        const { x: xDestination, y: yDestination } = destination;
+
+        if (xSource < xDestination && direction !== DIRECTION.EAST) {
+            return DIRECTION.EAST;
+        }
+        else if (xSource > xDestination && direction !== DIRECTION.WEST) {
+            return DIRECTION.WEST;
+        }
+        else if (ySource < yDestination && direction !== DIRECTION.NORTH) {
+            return DIRECTION.NORTH;
+        }
+        else if (ySource > yDestination && direction !== DIRECTION.SOUTH) {
+            return DIRECTION.SOUTH;
+        }
     }
 }
 
