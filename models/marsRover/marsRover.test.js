@@ -105,7 +105,7 @@ describe("Mars-Rover class", () => {
 
     test("get the correct command for a destination with obsticales", () => {
         expect(marsRover).toBeDefined();
-        initialCoordinates.setObsticales([]);
+        initialCoordinates.setObsticales([[1,0],[0,2]]);
         expect(marsRover.getCommandToOvercomeObsticale({x: 0, y: 0},{x: 1, y: 2},DIRECTION.NORTH,'')).toEqual("RFLFF");
     });
 });

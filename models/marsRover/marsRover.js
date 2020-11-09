@@ -151,7 +151,7 @@ class MarsRover {
             return command;
         }
         else {
-            let newDirection = this.getDirection(source, destination, direction);
+            const newDirection = this.getDirection(source, destination, direction);
             const newSource = this.moveMarsRover('F', { ...source, direction });
             command += this.decryptDirectionToCommand(direction,newDirection) + 'F';
 
